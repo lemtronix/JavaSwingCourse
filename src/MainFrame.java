@@ -10,6 +10,7 @@ public class MainFrame extends JFrame{
 	private TextPanel textPanel;
 	private JButton button;
 	private Toolbar toolbar;
+	private FormPanel formPanel;
 	
 	public MainFrame() {
 		super("Hello World");
@@ -19,6 +20,7 @@ public class MainFrame extends JFrame{
 		textPanel = new TextPanel();
 		button = new JButton("Click Me!");
 		toolbar = new Toolbar();
+		formPanel = new FormPanel();
 		
 		toolbar.setStringListener(new StringListener() {
 			@Override
@@ -35,8 +37,9 @@ public class MainFrame extends JFrame{
 		});
 		
 		add(toolbar, BorderLayout.NORTH);
-		add(textPanel, BorderLayout.CENTER);
 		add(button, BorderLayout.SOUTH);
+		add(formPanel, BorderLayout.WEST);
+		add(textPanel, BorderLayout.CENTER);
 		
 		setSize(300, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
