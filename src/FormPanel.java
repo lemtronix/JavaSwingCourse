@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,8 +25,10 @@ public class FormPanel extends JPanel {
 	
 	private JLabel nameLabel;
 	private JLabel occupationLabel;
+	private JLabel ageLabel;
 	private JTextField nameField;
 	private JTextField occupationField;
+	private JList<String> ageList;
 	private JButton okButton;
 	
 	private FormListener formListener;
@@ -38,10 +42,24 @@ public class FormPanel extends JPanel {
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
 		
+		ageLabel = new JLabel("Age: ");
+		ageList = new JList<String>();
+		
+		DefaultListModel<String> ageModel = new DefaultListModel<String>();
+		ageModel.addElement("Under 18");
+		ageModel.addElement("18-65");
+		ageModel.addElement("Over 65");
+		
+		ageList.setPreferredSize(new Dimension(115, 60));
+		ageList.setBorder(BorderFactory.createEtchedBorder());
+		ageList.setModel(ageModel);
+		ageList.setSelectedIndex(1); // Select the second item in the list
+		
 		okButton = new JButton("OK");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText());
+				System.out.println("Age: " + ageList.getSelectedValue());
 				
 				if (formListener != null) {
 					formListener.formEventOccurred(formEvent);
@@ -63,8 +81,8 @@ public class FormPanel extends JPanel {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.fill = GridBagConstraints.NONE;
 		
-		/// FIRST ROW ///
 		// weight determines how bunched objects should be together; higher number = more breathing room between components.
+		/// FIRST ROW ///
 		gc.weightx = 1;
 		gc.weighty = 0.1;
 		
@@ -97,8 +115,21 @@ public class FormPanel extends JPanel {
 		
 		/// THIRD ROW ///
 		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1;
 		gc.gridy = 2;
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(ageLabel, gc);
+		
+		gc.gridy = 2;
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(ageList, gc);
+		
+		// FOURTH ROW ///
+		gc.weightx = 1;
+		gc.weighty = 2;
+		gc.gridy = 3;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okButton, gc);
