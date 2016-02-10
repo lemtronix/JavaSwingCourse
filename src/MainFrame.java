@@ -29,6 +29,13 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
+		formPanel.setFormListener(new FormListener() {
+			@Override
+			public void formEventOccurred(FormEvent e ) {
+				textPanel.appendText(e.getName() + ": " + e.getOccupation() + "\n");
+			}
+		});
+		
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

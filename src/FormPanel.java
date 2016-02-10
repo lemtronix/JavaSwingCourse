@@ -2,6 +2,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,6 +27,8 @@ public class FormPanel extends JPanel {
 	private JTextField occupationField;
 	private JButton okButton;
 	
+	private FormListener formListener;
+	
 	public FormPanel() {
 		
 		// Create the components
@@ -35,6 +39,15 @@ public class FormPanel extends JPanel {
 		occupationField = new JTextField(10);
 		
 		okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText());
+				
+				if (formListener != null) {
+					formListener.formEventOccurred(formEvent);
+				}
+			}
+		});
 		
 		// Set the preferred width of this FormPanel to wider than 10, 10 pixels
 		setPreferredSize(new Dimension(250, 10));
@@ -89,5 +102,11 @@ public class FormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okButton, gc);
+	}
+	
+	public void setFormListener(FormListener listener) {
+		if (listener != null) {
+			this.formListener = listener;
+		}
 	}
 }
