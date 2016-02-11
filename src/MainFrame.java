@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 public class MainFrame extends JFrame {
 
@@ -79,13 +81,24 @@ public class MainFrame extends JFrame {
         JMenuItem exportDataItem = new JMenuItem("Export Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
         
+        exitItem.setMnemonic(KeyEvent.VK_X);
+        
+        KeyStroke keyStrokeCtrlX = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
+        exitItem.setAccelerator(keyStrokeCtrlX);
+        
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        
         fileMenu.add(importDataItem);
         fileMenu.add(exportDataItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
-
-        // Window Menu
-        JMenu windowMenu = new JMenu("Window");
+        
+        fileMenu.setMnemonic(KeyEvent.VK_F);
         
         // Create Window > Show 
         JMenu showSubMenu = new JMenu("Show");
@@ -97,11 +110,14 @@ public class MainFrame extends JFrame {
                 formPanel.setVisible(item.isSelected());
             }
         });
+        
         showPersonFormItem.setSelected(true);
         showSubMenu.add(showPersonFormItem);
         
-        
+        // Window Menu
+        JMenu windowMenu = new JMenu("Window");
         windowMenu.add(showSubMenu);
+        windowMenu.setMnemonic(KeyEvent.VK_W);
         
         // Create the Menu Bar
         JMenuBar menuBar = new JMenuBar();

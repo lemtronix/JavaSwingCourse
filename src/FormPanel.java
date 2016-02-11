@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -20,13 +21,13 @@ import javax.swing.JTextField;
 
 public class FormPanel extends JPanel {
 
-    private final int BORDER_TOP = 0;
-    private final int BORDER_LEFT = 5;
-    private final int BORDER_BOTTOM = 0;
-    private final int BORDER_RIGHT = 5;
+    private static final int BORDER_TOP = 0;
+    private static final int BORDER_LEFT = 5;
+    private static final int BORDER_BOTTOM = 0;
+    private static final int BORDER_RIGHT = 5;
 
-    private final Insets INSET_5_RT = new Insets(0, 0, 0, 5); // Adds a space between the object on the left and the object on the right
-    private final Insets INSET_NONE = new Insets(0, 0, 0, 0);
+    private static final Insets INSET_5_RT = new Insets(0, 0, 0, 5); // Adds a space between the object on the left and the object on the right
+    private static final Insets INSET_NONE = new Insets(0, 0, 0, 0);
 
     private JTextField nameField;
     private JTextField occupationField;
@@ -102,6 +103,7 @@ public class FormPanel extends JPanel {
 
         // Create the OK button
         okButton = new JButton("OK");
+        okButton.setMnemonic(KeyEvent.VK_O);
 
         // When the okay button is clicked...
         okButton.addActionListener(new ActionListener() {
