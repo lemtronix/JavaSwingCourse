@@ -28,7 +28,7 @@ public class FormPanel extends JPanel {
 	private JLabel ageLabel;
 	private JTextField nameField;
 	private JTextField occupationField;
-	private JList<String> ageList;
+	private JList<AgeCategory> ageList;
 	private JButton okButton;
 	
 	private FormListener formListener;
@@ -43,12 +43,12 @@ public class FormPanel extends JPanel {
 		occupationField = new JTextField(10);
 		
 		ageLabel = new JLabel("Age: ");
-		ageList = new JList<String>();
+		ageList = new JList<AgeCategory>();
 		
-		DefaultListModel<String> ageModel = new DefaultListModel<String>();
-		ageModel.addElement("Under 18");
-		ageModel.addElement("18-65");
-		ageModel.addElement("Over 65");
+		DefaultListModel<AgeCategory> ageModel = new DefaultListModel<AgeCategory>();
+		ageModel.addElement(new AgeCategory(0, "Under 18"));
+		ageModel.addElement(new AgeCategory(1, "18-65"));
+		ageModel.addElement(new AgeCategory(2, "Over 65"));
 		
 		ageList.setPreferredSize(new Dimension(115, 60));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
@@ -56,10 +56,15 @@ public class FormPanel extends JPanel {
 		ageList.setSelectedIndex(1); // Select the second item in the list
 		
 		okButton = new JButton("OK");
+		
+		// When the okay button is clicked...
 		okButton.addActionListener(new ActionListener() {
+
+			// Get the values from the field and list boxes and send a form event to any form listeners
 			public void actionPerformed(ActionEvent e) {
-				FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText());
-				System.out.println("Age: " + ageList.getSelectedValue());
+				AgeCategory ageSelection = ageList.getSelectedValue();
+				
+				FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText(), ageSelection.getId());
 				
 				if (formListener != null) {
 					formListener.formEventOccurred(formEvent);
@@ -139,5 +144,25 @@ public class FormPanel extends JPanel {
 		if (listener != null) {
 			this.formListener = listener;
 		}
+	}
+}
+
+class AgeCategory {
+	
+	private int id;
+	private String text;
+	
+	public AgeCategory(int id, String text) {
+		this.id = id;
+		this.text = text;
+	}
+	
+	public String toString()
+	{
+		return text;
+	}
+	
+	public int getId() {
+		return id;
 	}
 }

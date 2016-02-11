@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame {
 
 	private TextPanel textPanel;
 	private JButton button;
@@ -32,7 +32,7 @@ public class MainFrame extends JFrame{
 		formPanel.setFormListener(new FormListener() {
 			@Override
 			public void formEventOccurred(FormEvent e ) {
-				textPanel.appendText(e.getName() + ": " + e.getOccupation() + "\n");
+				textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + "\n");
 			}
 		});
 		
