@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
                 }
 
                 textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory()
-                        + ": " + taxIdString + ": " + e.isUsCitizen() + "\n");
+                        + ": " + taxIdString + ": " + e.isUsCitizen() + ": " + e.getGender() + "\n");
             }
         });
 
@@ -57,7 +58,9 @@ public class MainFrame extends JFrame {
         add(formPanel, BorderLayout.WEST);
         add(textPanel, BorderLayout.CENTER);
 
-        setSize(400, 300);
+        setMinimumSize(new Dimension(500, 400));
+        setSize(500, 400);
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
