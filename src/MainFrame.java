@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 public class MainFrame extends JFrame {
@@ -30,7 +31,7 @@ public class MainFrame extends JFrame {
         formPanel = new FormPanel();
 
         setJMenuBar(createMenuBar());
-        
+
         toolbar.setStringListener(new StringListener() {
             @Override
             public void textEmitted(String text) {
@@ -68,62 +69,70 @@ public class MainFrame extends JFrame {
 
         setMinimumSize(new Dimension(500, 400));
         setSize(500, 400);
-        
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
-    
+
     private JMenuBar createMenuBar() {
-        
+
         // File Menu
         JMenu fileMenu = new JMenu("File");
         JMenuItem importDataItem = new JMenuItem("Import Data...");
         JMenuItem exportDataItem = new JMenuItem("Export Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
-        
+
         exitItem.setMnemonic(KeyEvent.VK_X);
-        
+
         KeyStroke keyStrokeCtrlX = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
         exitItem.setAccelerator(keyStrokeCtrlX);
-        
+
         exitItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                // Prompt the user to ensure they really want to quit
+                int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?", "Confirm Exit",
+                        JOptionPane.OK_CANCEL_OPTION);
+
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                } else {
+                    // Ignore
+                }
             }
         });
-        
+
         fileMenu.add(importDataItem);
         fileMenu.add(exportDataItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
-        
+
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        
-        // Create Window > Show 
+
+        // Create Window > Show
         JMenu showSubMenu = new JMenu("Show");
         JCheckBoxMenuItem showPersonFormItem = new JCheckBoxMenuItem("Person Form");
         showPersonFormItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JCheckBoxMenuItem item = (JCheckBoxMenuItem)e.getSource();
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
                 formPanel.setVisible(item.isSelected());
             }
         });
-        
+
         showPersonFormItem.setSelected(true);
         showSubMenu.add(showPersonFormItem);
-        
+
         // Window Menu
         JMenu windowMenu = new JMenu("Window");
         windowMenu.add(showSubMenu);
         windowMenu.setMnemonic(KeyEvent.VK_W);
-        
+
         // Create the Menu Bar
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
-        
+
         return menuBar;
     }
 }
