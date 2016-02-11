@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     private FormPanel formPanel;
 
     public MainFrame() {
-        super("Hello World");
+        super("Employee Entry Form");
 
         setLayout(new BorderLayout());
 
@@ -32,8 +32,16 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
             @Override
             public void formEventOccurred(FormEvent e) {
-                textPanel.appendText(
-                        e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory() + "\n");
+                boolean isUsCitizen = e.isUsCitizen();
+                String taxIdString = e.getTaxId();
+
+                if (isUsCitizen == false) {
+                    // Only accept the taxIdString if the person is a US Citizen
+                    taxIdString = "";
+                }
+
+                textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory()
+                        + ": " + taxIdString + ": " + e.isUsCitizen() + "\n");
             }
         });
 
