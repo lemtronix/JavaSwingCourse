@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class MainFrame extends JFrame {
 
@@ -23,6 +26,8 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
         formPanel = new FormPanel();
 
+        setJMenuBar(createMenuBar());
+        
         toolbar.setStringListener(new StringListener() {
             @Override
             public void textEmitted(String text) {
@@ -63,5 +68,36 @@ public class MainFrame extends JFrame {
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+    
+    private JMenuBar createMenuBar() {
+        
+        // File Menu
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem importDataItem = new JMenuItem("Import Data...");
+        JMenuItem exportDataItem = new JMenuItem("Export Data...");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        
+        fileMenu.add(importDataItem);
+        fileMenu.add(exportDataItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+
+        // Window Menu
+        JMenu windowMenu = new JMenu("Window");
+        
+        //
+        JMenu showSubMenu = new JMenu("Show");
+        JMenuItem personFormItem = new JMenuItem("Person Form");
+        showSubMenu.add(personFormItem);
+        
+        windowMenu.add(showSubMenu);
+        
+        // Create the Menu Bar
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(fileMenu);
+        menuBar.add(windowMenu);
+        
+        return menuBar;
     }
 }
