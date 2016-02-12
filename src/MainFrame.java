@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +20,7 @@ public class MainFrame extends JFrame {
     private JButton button;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private JFileChooser fileChooser;
 
     public MainFrame() {
         super("Employee Entry Form");
@@ -29,6 +31,7 @@ public class MainFrame extends JFrame {
         button = new JButton("Click Me!");
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        fileChooser = new JFileChooser();
 
         setJMenuBar(createMenuBar());
 
@@ -81,9 +84,34 @@ public class MainFrame extends JFrame {
         JMenuItem importDataItem = new JMenuItem("Import Data...");
         JMenuItem exportDataItem = new JMenuItem("Export Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
-
+        
+        importDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+                else
+                {
+                    System.out.println("PopDown Error!");
+                }
+            }
+        });
+        
+        exportDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+                else
+                {
+                    System.out.println("PopDown Error!");
+                }
+            }
+        });
+        
         exitItem.setMnemonic(KeyEvent.VK_X);
-
         KeyStroke keyStrokeCtrlX = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
         exitItem.setAccelerator(keyStrokeCtrlX);
 

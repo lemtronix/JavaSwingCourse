@@ -111,11 +111,10 @@ public class FormPanel extends JPanel {
             // Get the values from the field and list boxes and send a form
             // event to any form listeners
             public void actionPerformed(ActionEvent e) {
-                AgeCategory ageSelection = ageList.getSelectedValue();
-
-                FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText(), ageSelection.getId(),
-                        employmentCombo.getSelectedItem().toString(), taxField.getText(), citizenCheck.isSelected(),
-                        genderGroup.getSelection().getActionCommand());
+                
+                FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText(),
+                        ageList.getSelectedValue().getId(), employmentCombo.getSelectedItem().toString(), taxField.getText(),
+                        citizenCheck.isSelected(), genderGroup.getSelection().getActionCommand());
 
                 if (formListener != null) {
                     formListener.formEventOccurred(formEvent);
