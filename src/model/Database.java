@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Database
 {
-
     private ArrayList<Person> people;
 
     public Database()

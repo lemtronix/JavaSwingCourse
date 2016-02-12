@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,13 +19,10 @@ import controller.Controller;
 
 public class MainFrame extends JFrame
 {
-
-    private TextPanel textPanel;
-    private JButton button;
-    private Toolbar toolbar;
+    private Controller controller;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
-    private Controller controller;
+    private TablePanel tablePanel;
 
     public MainFrame()
     {
@@ -36,59 +32,29 @@ public class MainFrame extends JFrame
 
         setLayout(new BorderLayout());
 
-        textPanel = new TextPanel();
-        button = new JButton("Click Me!");
-        toolbar = new Toolbar();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
+
+        tablePanel.setData(controller.getPeople());
 
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
-        toolbar.setStringListener(new StringListener()
-        {
-            @Override
-            public void textEmitted(String text)
-            {
-                textPanel.appendText(text);
-            }
-        });
-
         formPanel.setFormListener(new FormListener()
         {
             @Override
             public void formEventOccurred(FormEvent e)
             {
-                boolean isUsCitizen = e.isUsCitizen();
-                String taxIdString = e.getTaxId();
-
-                if (isUsCitizen == false)
-                {
-                    // Only accept the taxIdString if the person is a US Citizen
-                    taxIdString = "";
-                }
-
-                textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory()
-                        + ": " + taxIdString + ": " + e.isUsCitizen() + ": " + e.getGender() + "\n");
-
                 controller.addPerson(e);
+                tablePanel.refresh();
+
             }
         });
 
-        button.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                textPanel.appendText("Hello!\n");
-            }
-        });
-
-        add(toolbar, BorderLayout.NORTH);
-        add(button, BorderLayout.SOUTH);
         add(formPanel, BorderLayout.WEST);
-        add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
 
         setMinimumSize(new Dimension(500, 400));
         setSize(500, 400);
@@ -114,7 +80,8 @@ public class MainFrame extends JFrame
                 if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
                 {
                     System.out.println(fileChooser.getSelectedFile());
-                } else
+                }
+                else
                 {
                     System.out.println("PopDown Error!");
                 }
@@ -129,7 +96,8 @@ public class MainFrame extends JFrame
                 if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
                 {
                     System.out.println(fileChooser.getSelectedFile());
-                } else
+                }
+                else
                 {
                     System.out.println("PopDown Error!");
                 }
@@ -152,7 +120,8 @@ public class MainFrame extends JFrame
                 if (action == JOptionPane.OK_OPTION)
                 {
                     System.exit(0);
-                } else
+                }
+                else
                 {
                     // Ignore
                 }

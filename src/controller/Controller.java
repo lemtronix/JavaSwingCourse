@@ -1,7 +1,8 @@
 package controller;
 
-import gui.FormEvent;
+import java.util.List;
 
+import gui.FormEvent;
 import model.AgeCategory;
 import model.Database;
 import model.EmployementCategory;
@@ -20,6 +21,11 @@ public class Controller
                 .usCitizen(formContents.isUsCitizen()).gender(convertGenderCategoryString(formContents.getGender())).build());
     }
 
+    public List<Person> getPeople()
+    {
+        return db.getPeople();
+    }
+    
     private AgeCategory convertAgeCategoryId(int ageCatId)
     {
         AgeCategory ageCategory = AgeCategory.minor;
