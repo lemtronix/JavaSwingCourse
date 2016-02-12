@@ -1,6 +1,7 @@
 package model;
 
-public enum AgeCategory {
+public enum AgeCategory
+{
     minor,
     adult,
     senior

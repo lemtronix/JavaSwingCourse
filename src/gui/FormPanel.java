@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,7 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class FormPanel extends JPanel {
+public class FormPanel extends JPanel
+{
 
     private static final int BORDER_TOP = 0;
     private static final int BORDER_LEFT = 5;
@@ -45,7 +47,8 @@ public class FormPanel extends JPanel {
 
     private FormListener formListener;
 
-    public FormPanel() {
+    public FormPanel()
+    {
 
         // Create the components
         nameField = new JTextField(10);
@@ -80,9 +83,11 @@ public class FormPanel extends JPanel {
         taxLabel.setEnabled(false);
         taxField.setEnabled(false);
 
-        citizenCheck.addActionListener(new ActionListener() {
+        citizenCheck.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 boolean isTicked = citizenCheck.isSelected();
                 taxLabel.setEnabled(isTicked);
                 taxField.setEnabled(isTicked);
@@ -107,17 +112,20 @@ public class FormPanel extends JPanel {
         okButton.setMnemonic(KeyEvent.VK_O);
 
         // When the okay button is clicked...
-        okButton.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener()
+        {
 
             // Get the values from the field and list boxes and send a form
             // event to any form listeners
-            public void actionPerformed(ActionEvent e) {
-                
+            public void actionPerformed(ActionEvent e)
+            {
+
                 FormEvent formEvent = new FormEvent(this, nameField.getText(), occupationField.getText(),
                         ageList.getSelectedValue().getId(), employmentCombo.getSelectedItem().toString(), taxField.getText(),
                         citizenCheck.isSelected(), genderGroup.getSelection().getActionCommand());
 
-                if (formListener != null) {
+                if (formListener != null)
+                {
                     formListener.formEventOccurred(formEvent);
                 }
             }
@@ -132,13 +140,16 @@ public class FormPanel extends JPanel {
         layoutComponents();
     }
 
-    public void setFormListener(FormListener listener) {
-        if (listener != null) {
+    public void setFormListener(FormListener listener)
+    {
+        if (listener != null)
+        {
             this.formListener = listener;
         }
     }
 
-    public void layoutComponents() {
+    public void layoutComponents()
+    {
         // Use the Grid Bag Layout manager
         setLayout(new GridBagLayout());
 
@@ -284,21 +295,25 @@ public class FormPanel extends JPanel {
     }
 }
 
-class AgeCategory {
+class AgeCategory
+{
 
     private int id;
     private String text;
 
-    public AgeCategory(int id, String text) {
+    public AgeCategory(int id, String text)
+    {
         this.id = id;
         this.text = text;
     }
 
-    public String toString() {
+    public String toString()
+    {
         return text;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 }

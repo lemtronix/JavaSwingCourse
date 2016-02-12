@@ -1,9 +1,10 @@
 package model;
 
-public class Person {
+public class Person
+{
 
     private static int instanceCounter = 0;
-    
+
     private int id;
     private String name;
     private String occupation;
@@ -12,8 +13,9 @@ public class Person {
     private String taxId;
     private boolean usCitizen;
     private Gender gender;
-    
-    private Person(Builder builder) {
+
+    private Person(Builder builder)
+    {
         this.name = builder.name;
         this.occupation = builder.occupation;
         this.ageCategory = builder.ageCategory;
@@ -21,38 +23,54 @@ public class Person {
         this.taxId = builder.taxId;
         this.usCitizen = builder.usCitizen;
         this.gender = builder.gender;
-        
+
         this.id = instanceCounter;
         instanceCounter++;
     }
-    
-    public int getId() {
+
+    public int getId()
+    {
         return id;
     }
-    public String getName() {
+
+    public String getName()
+    {
         return name;
     }
-    public String getOccupation() {
+
+    public String getOccupation()
+    {
         return occupation;
     }
-    public AgeCategory getAgeCategory() {
+
+    public AgeCategory getAgeCategory()
+    {
         return ageCategory;
     }
-    public EmployementCategory getEmployementCategory() {
+
+    public EmployementCategory getEmployementCategory()
+    {
         return employementCategory;
     }
-    public String getTaxId() {
+
+    public String getTaxId()
+    {
         return taxId;
     }
-    public boolean isUsCitizen() {
+
+    public boolean isUsCitizen()
+    {
         return usCitizen;
     }
-    public Gender getGender() {
+
+    public Gender getGender()
+    {
         return gender;
     }
-    
-    public static class Builder {
-        
+
+    public static class Builder
+    {
+
         private String name;
         private String occupation;
         private AgeCategory ageCategory;
@@ -60,43 +78,51 @@ public class Person {
         private String taxId;
         private boolean usCitizen;
         private Gender gender;
-        
-        public Builder name(String value) {
+
+        public Builder name(String value)
+        {
             this.name = value;
             return this;
         }
-        
-        public Builder occupation(String value) {
+
+        public Builder occupation(String value)
+        {
             this.occupation = value;
             return this;
         }
-        
-        public Builder ageCategory(AgeCategory value) {
+
+        public Builder ageCategory(AgeCategory value)
+        {
             this.ageCategory = value;
             return this;
         }
-        
-        public Builder employementCategory(EmployementCategory value) {
+
+        public Builder employementCategory(EmployementCategory value)
+        {
             this.employementCategory = value;
             return this;
         }
-        
-        public Builder taxId(String value) {
+
+        public Builder taxId(String value)
+        {
             this.taxId = value;
             return this;
         }
-        
-        public Builder usCitizen(boolean value) {
+
+        public Builder usCitizen(boolean value)
+        {
             this.usCitizen = value;
             return this;
         }
-        
-        public Builder gender(Gender value) {
+
+        public Builder gender(Gender value)
+        {
             this.gender = value;
             return this;
         }
-        
-        public Person build() {
+
+        public Person build()
+        {
             return new Person(this);
         }
     }

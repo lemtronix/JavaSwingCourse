@@ -1,6 +1,7 @@
 package model;
 
-public enum EmployementCategory {
+public enum EmployementCategory
+{
     Employed,
     SelfEmployed,
     Unemployed,

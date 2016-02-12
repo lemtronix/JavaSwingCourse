@@ -18,7 +18,8 @@ import javax.swing.KeyStroke;
 
 import controller.Controller;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame
+{
 
     private TextPanel textPanel;
     private JButton button;
@@ -27,9 +28,10 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser;
     private Controller controller;
 
-    public MainFrame() {
+    public MainFrame()
+    {
         super("Employee Entry Form");
-        
+
         controller = new Controller();
 
         setLayout(new BorderLayout());
@@ -38,40 +40,47 @@ public class MainFrame extends JFrame {
         button = new JButton("Click Me!");
         toolbar = new Toolbar();
         formPanel = new FormPanel();
-        
+
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
-        toolbar.setStringListener(new StringListener() {
+        toolbar.setStringListener(new StringListener()
+        {
             @Override
-            public void textEmitted(String text) {
+            public void textEmitted(String text)
+            {
                 textPanel.appendText(text);
             }
         });
 
-        formPanel.setFormListener(new FormListener() {
+        formPanel.setFormListener(new FormListener()
+        {
             @Override
-            public void formEventOccurred(FormEvent e) {
+            public void formEventOccurred(FormEvent e)
+            {
                 boolean isUsCitizen = e.isUsCitizen();
                 String taxIdString = e.getTaxId();
 
-                if (isUsCitizen == false) {
+                if (isUsCitizen == false)
+                {
                     // Only accept the taxIdString if the person is a US Citizen
                     taxIdString = "";
                 }
 
                 textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory()
                         + ": " + taxIdString + ": " + e.isUsCitizen() + ": " + e.getGender() + "\n");
-                
+
                 controller.addPerson(e);
             }
         });
 
-        button.addActionListener(new ActionListener() {
+        button.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 textPanel.appendText("Hello!\n");
             }
         });
@@ -88,54 +97,63 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    private JMenuBar createMenuBar() {
+    private JMenuBar createMenuBar()
+    {
 
         // File Menu
         JMenu fileMenu = new JMenu("File");
         JMenuItem importDataItem = new JMenuItem("Import Data...");
         JMenuItem exportDataItem = new JMenuItem("Export Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
-        
-        importDataItem.addActionListener(new ActionListener() {
+
+        importDataItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+            public void actionPerformed(ActionEvent e)
+            {
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
+                {
                     System.out.println(fileChooser.getSelectedFile());
-                }
-                else
+                } else
                 {
                     System.out.println("PopDown Error!");
                 }
             }
         });
-        
-        exportDataItem.addActionListener(new ActionListener() {
+
+        exportDataItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+            public void actionPerformed(ActionEvent e)
+            {
+                if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
+                {
                     System.out.println(fileChooser.getSelectedFile());
-                }
-                else
+                } else
                 {
                     System.out.println("PopDown Error!");
                 }
             }
         });
-        
+
         exitItem.setMnemonic(KeyEvent.VK_X);
         KeyStroke keyStrokeCtrlX = KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK);
         exitItem.setAccelerator(keyStrokeCtrlX);
 
-        exitItem.addActionListener(new ActionListener() {
+        exitItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 // Prompt the user to ensure they really want to quit
                 int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?", "Confirm Exit",
                         JOptionPane.OK_CANCEL_OPTION);
 
-                if (action == JOptionPane.OK_OPTION) {
+                if (action == JOptionPane.OK_OPTION)
+                {
                     System.exit(0);
-                } else {
+                } else
+                {
                     // Ignore
                 }
             }
@@ -151,9 +169,11 @@ public class MainFrame extends JFrame {
         // Create Window > Show
         JMenu showSubMenu = new JMenu("Show");
         JCheckBoxMenuItem showPersonFormItem = new JCheckBoxMenuItem("Person Form");
-        showPersonFormItem.addActionListener(new ActionListener() {
+        showPersonFormItem.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
                 formPanel.setVisible(item.isSelected());
             }

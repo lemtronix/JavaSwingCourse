@@ -1,7 +1,9 @@
 package gui;
+
 import java.util.EventObject;
 
-public class FormEvent extends EventObject {
+public class FormEvent extends EventObject
+{
 
     private String name;
     private String occupation;
@@ -11,12 +13,14 @@ public class FormEvent extends EventObject {
     private boolean usCitizen;
     private String gender;
 
-    public FormEvent(Object source) {
+    public FormEvent(Object source)
+    {
         super(source);
     }
 
     public FormEvent(Object source, String name, String occupation, int ageCategory, String employmentCategory, String taxId,
-            boolean usCitizen, String gender) {
+            boolean usCitizen, String gender)
+    {
         super(source);
 
         this.name = name;
@@ -28,31 +32,38 @@ public class FormEvent extends EventObject {
         this.gender = gender;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public String getOccupation() {
+    public String getOccupation()
+    {
         return occupation;
     }
 
-    public int getAgeCategory() {
+    public int getAgeCategory()
+    {
         return ageCategory;
     }
 
-    public String getEmployeeCategory() {
+    public String getEmployeeCategory()
+    {
         return employementCategory;
     }
 
-    public String getTaxId() {
+    public String getTaxId()
+    {
         return taxId;
     }
 
-    public boolean isUsCitizen() {
+    public boolean isUsCitizen()
+    {
         return usCitizen;
     }
 
-    public String getGender() {
+    public String getGender()
+    {
         return gender;
     }
 
