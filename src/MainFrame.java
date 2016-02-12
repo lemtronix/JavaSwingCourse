@@ -31,7 +31,9 @@ public class MainFrame extends JFrame {
         button = new JButton("Click Me!");
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        
         fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
