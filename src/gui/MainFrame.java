@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.Controller;
+
 public class MainFrame extends JFrame {
 
     private TextPanel textPanel;
@@ -23,9 +25,12 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private Controller controller;
 
     public MainFrame() {
         super("Employee Entry Form");
+        
+        controller = new Controller();
 
         setLayout(new BorderLayout());
 
@@ -59,6 +64,8 @@ public class MainFrame extends JFrame {
 
                 textPanel.appendText(e.getName() + ": " + e.getOccupation() + ": " + e.getAgeCategory() + ": " + e.getEmployeeCategory()
                         + ": " + taxIdString + ": " + e.isUsCitizen() + ": " + e.getGender() + "\n");
+                
+                controller.addPerson(e);
             }
         });
 
