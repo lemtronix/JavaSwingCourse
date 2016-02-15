@@ -24,20 +24,23 @@ public class MainFrame extends JFrame
     private FormPanel formPanel;
     private JFileChooser fileChooser;
     private TablePanel tablePanel;
+    private PrefsDialog prefsDialog;
 
     public MainFrame()
     {
         super("Employee Entry Form");
 
-        controller = new Controller();
-
         setLayout(new BorderLayout());
-
-        formPanel = new FormPanel();
+        
+        // Controller
+        controller = new Controller();
+        
+        // Preferences Dialog
+        prefsDialog = new PrefsDialog(this);
+        
+        // Table Panel
         tablePanel = new TablePanel();
-
         tablePanel.setData(controller.getPeople());
-
         tablePanel.setPersonTableListener(new PersonTableListener()
         {
             public void rowDeleted(int row)
@@ -47,11 +50,15 @@ public class MainFrame extends JFrame
             }
         });
         
+        // File Chooser
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
+        
+        // Form Panel
+        formPanel = new FormPanel();
         formPanel.setFormListener(new FormListener()
         {
             @Override
@@ -63,6 +70,7 @@ public class MainFrame extends JFrame
             }
         });
 
+        // Add components to layout manager
         add(formPanel, BorderLayout.WEST);
         add(tablePanel, BorderLayout.CENTER);
 
@@ -174,6 +182,8 @@ public class MainFrame extends JFrame
 
         // Create Window > Show
         JMenu showSubMenu = new JMenu("Show");
+        
+        // Create Window > Show > Person Form
         JCheckBoxMenuItem showPersonFormItem = new JCheckBoxMenuItem("Person Form");
         showPersonFormItem.addActionListener(new ActionListener()
         {
@@ -188,10 +198,22 @@ public class MainFrame extends JFrame
         showPersonFormItem.setSelected(true);
         showSubMenu.add(showPersonFormItem);
 
+        // Create Window > Show > Preferences
+        JMenuItem prefsItem = new JMenuItem("Preferences...");
+        prefsItem.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                prefsDialog.setVisible(true);
+            }
+        });
+        
         // Window Menu
         JMenu windowMenu = new JMenu("Window");
-        windowMenu.add(showSubMenu);
         windowMenu.setMnemonic(KeyEvent.VK_W);
+        windowMenu.add(showSubMenu);
+        windowMenu.add(prefsItem);
 
         // Create the Menu Bar
         JMenuBar menuBar = new JMenuBar();
