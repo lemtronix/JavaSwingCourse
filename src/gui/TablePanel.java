@@ -20,6 +20,7 @@ public class TablePanel extends JPanel
     private JTable table;
     private PersonTableModel tableModel;
     private JPopupMenu popUp; // Menu system for when mouse is right clicked in the table area
+    private PersonTableListener personTableListener;
     
     public TablePanel()
     {
@@ -57,9 +58,15 @@ public class TablePanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // Delete the row
+                // Get the row that was selected
                 int row = table.getSelectedRow();
-                System.out.println("Deleted Row: " + row);
+                
+                if (personTableListener != null)
+                {
+                    // Send the row deleted to any one that's listening
+                    personTableListener.rowDeleted(row);
+                    tableModel.fireTableRowsDeleted(row, row);
+                }
             }
         });
         
@@ -76,5 +83,10 @@ public class TablePanel extends JPanel
     public void refresh()
     {
         tableModel.fireTableDataChanged();
+    }
+    
+    public void setPersonTableListener(PersonTableListener listener)
+    {
+        this.personTableListener = listener;
     }
 }

@@ -23,6 +23,11 @@ public class Controller
                 .usCitizen(formContents.isUsCitizen()).gender(convertGenderCategoryString(formContents.getGender())).build());
     }
 
+    public void removePerson(int index)
+    {
+        db.remove(index);
+    }
+    
     public List<Person> getPeople()
     {
         return db.getPeople();
