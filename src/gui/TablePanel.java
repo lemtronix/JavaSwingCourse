@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -34,6 +36,12 @@ public class TablePanel extends JPanel
             @Override
             public void mousePressed(MouseEvent e)
             {
+                // Get the row at the mouse location
+                int row = table.rowAtPoint(e.getPoint());
+                
+                // This actually highlights the selected row when its selected by a right mouse click
+                table.getSelectionModel().setSelectionInterval(row, row);
+                
                 if (e.getButton() == MouseEvent.BUTTON3)
                 {
                     // Show the menu where the mouse is located
@@ -41,6 +49,18 @@ public class TablePanel extends JPanel
                 }
             }
             
+        });
+        
+        // Remove the row when it is selected from the pop up menu
+        removeItem.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                // Delete the row
+                int row = table.getSelectedRow();
+                System.out.println("Deleted Row: " + row);
+            }
         });
         
         setLayout(new BorderLayout());
