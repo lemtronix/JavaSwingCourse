@@ -1,3 +1,7 @@
+/*
+ * Controller is responsible for linking the View (GUI) to the Model (Database et al.)
+ */
+
 package controller;
 
 import java.io.File;

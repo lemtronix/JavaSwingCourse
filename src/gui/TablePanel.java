@@ -1,3 +1,6 @@
+/*
+ * TablePanel is the window on the right hand side of the application that displays all of the information from the database
+ */
 package gui;
 
 import java.awt.BorderLayout;

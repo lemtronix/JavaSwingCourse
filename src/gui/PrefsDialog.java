@@ -1,3 +1,7 @@
+/*
+ * This is the Window > Preferences dialog box that pops up in the application
+ */
+
 package gui;
 
 import java.awt.GridBagConstraints;

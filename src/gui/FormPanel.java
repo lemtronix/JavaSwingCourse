@@ -1,3 +1,7 @@
+/*
+ * FormPanel is the Form on the left hand side of the application where the user inputs their information
+ */
+
 package gui;
 
 import java.awt.Dimension;

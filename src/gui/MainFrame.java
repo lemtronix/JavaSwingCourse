@@ -1,3 +1,6 @@
+/*
+ * MainFrame is the GUI controller for all of the different objects (i.e. FormPanel, TablePanel)
+ */
 package gui;
 
 import java.awt.BorderLayout;
