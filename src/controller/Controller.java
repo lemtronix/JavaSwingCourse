@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import gui.FormEvent;
@@ -24,6 +26,16 @@ public class Controller
     public List<Person> getPeople()
     {
         return db.getPeople();
+    }
+    
+    public void saveToFile(File f) throws IOException
+    {
+        db.saveToFile(f);
+    }
+    
+    public void loadFromFile(File f) throws IOException
+    {
+        db.loadFromFile(f);
     }
     
     private AgeCategory convertAgeCategoryId(int ageCatId)

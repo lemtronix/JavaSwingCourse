@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -79,7 +80,19 @@ public class MainFrame extends JFrame
             {
                 if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
                 {
-                    System.out.println(fileChooser.getSelectedFile());
+                    try
+                    {
+                        controller.loadFromFile(fileChooser.getSelectedFile());
+                        
+                        // Notify the table panel that there's data to process
+                        tablePanel.refresh();
+                        
+                        System.out.println("Loaded: " + fileChooser.getSelectedFile());
+                    }
+                    catch (IOException ioe)
+                    {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not load selected file.", "Error!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 else
                 {
@@ -95,7 +108,15 @@ public class MainFrame extends JFrame
             {
                 if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
                 {
-                    System.out.println(fileChooser.getSelectedFile());
+                    try
+                    {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                        System.out.println("Saved: " + fileChooser.getSelectedFile());
+                    }
+                    catch (IOException ioe)
+                    {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not save data to selected file.", "Error!", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 else
                 {

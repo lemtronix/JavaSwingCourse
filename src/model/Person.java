@@ -1,7 +1,10 @@
 package model;
 
-public class Person
+import java.io.Serializable;
+
+public class Person implements Serializable
 {
+    private static final long serialVersionUID = -8094467814634573287L;
 
     private static int instanceCounter = 0;
 

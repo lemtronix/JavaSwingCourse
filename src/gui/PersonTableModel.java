@@ -68,6 +68,7 @@ public class PersonTableModel extends AbstractTableModel
             System.err.println("PersonTableModel.java: Invalid column index");
             break;
         }
+        
         // No matches
         return null;
     }
