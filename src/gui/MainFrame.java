@@ -73,6 +73,9 @@ public class MainFrame extends JFrame
         JMenuItem exportDataItem = new JMenuItem("Export Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
 
+        // CTRL-I for importing an item
+        importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+
         importDataItem.addActionListener(new ActionListener()
         {
             @Override
@@ -83,10 +86,10 @@ public class MainFrame extends JFrame
                     try
                     {
                         controller.loadFromFile(fileChooser.getSelectedFile());
-                        
+
                         // Notify the table panel that there's data to process
                         tablePanel.refresh();
-                        
+
                         System.out.println("Loaded: " + fileChooser.getSelectedFile());
                     }
                     catch (IOException ioe)
@@ -100,6 +103,9 @@ public class MainFrame extends JFrame
                 }
             }
         });
+
+        // CTRL-E for exporting an item
+        exportDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 
         exportDataItem.addActionListener(new ActionListener()
         {
@@ -115,7 +121,8 @@ public class MainFrame extends JFrame
                     }
                     catch (IOException ioe)
                     {
-                        JOptionPane.showMessageDialog(MainFrame.this, "Could not save data to selected file.", "Error!", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not save data to selected file.", "Error!",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else
