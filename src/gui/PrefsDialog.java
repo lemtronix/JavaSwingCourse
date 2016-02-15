@@ -9,7 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class PrefsDialog extends JDialog
@@ -17,6 +19,8 @@ public class PrefsDialog extends JDialog
     private static final boolean MODALITY = false;   // Model means carry on working, non-model does not allow you to do work in the GUI
     private static final int DIALOG_WIDTH = 200;
     private static final int DIALOG_HEIGHT = 200;
+    
+    private static final int JFIELD_LENGTH = 10;
     
     private static final int SQL_PORT_DEFAULT = 3306;
     private static final int SQL_PORT_MIN = 0;
@@ -27,6 +31,8 @@ public class PrefsDialog extends JDialog
     private JButton cancelButton;
     private JSpinner portSpinner;
     private SpinnerNumberModel spinnerModel;
+    private JTextField userField;
+    private JPasswordField passField;
     
     public PrefsDialog(JFrame parent)
     {
@@ -38,6 +44,10 @@ public class PrefsDialog extends JDialog
         spinnerModel = new SpinnerNumberModel(SQL_PORT_DEFAULT, SQL_PORT_MIN, SQL_PORT_MAX, SQL_PORT_INCREMENT);
         portSpinner = new JSpinner(spinnerModel);
         
+        userField = new JTextField(JFIELD_LENGTH);
+        passField = new JPasswordField(JFIELD_LENGTH);
+        passField.setEchoChar('*');
+        
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
         
@@ -48,6 +58,24 @@ public class PrefsDialog extends JDialog
         
         // FIRST ROW
         gc.gridy = 0;
+        gc.gridx = 0;
+        
+        add(new JLabel("User: "), gc);
+        
+        gc.gridx++;
+        add(userField, gc);
+        
+        // NEXT ROW
+        gc.gridy++;
+        gc.gridx = 0;
+        
+        add(new JLabel("Password: "), gc);
+        
+        gc.gridx++;
+        add(passField, gc);
+        
+        // NEXT ROW
+        gc.gridy++;
         gc.gridx = 0;
         
         add(new JLabel("Port: "), gc);
@@ -71,7 +99,13 @@ public class PrefsDialog extends JDialog
             public void actionPerformed(ActionEvent e)
             {
                 int value = (int) portSpinner.getValue();
+                String userName = userField.getText();
+                char[] password = passField.getPassword();
+                
                 setVisible(false);
+                
+                System.out.println("User: " + userName);
+                System.out.println("Password: " + new String(password));
                 System.out.println("SQL Port: " + value);
             }
         });
