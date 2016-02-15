@@ -38,6 +38,8 @@ public class PrefsDialog extends JDialog
     private JTextField userField;
     private JPasswordField passField;
     
+    private PrefsListener prefsListener;
+    
     public PrefsDialog(JFrame parent)
     {
         super(parent, "Preferences", MODALITY);
@@ -102,15 +104,16 @@ public class PrefsDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int value = (int) portSpinner.getValue();
+                int portNumber = (int) portSpinner.getValue();
                 String userName = userField.getText();
                 char[] password = passField.getPassword();
                 
-                setVisible(false);
+                if(prefsListener != null)
+                {
+                    prefsListener.preferencesSet(userName, new String(password), portNumber);
+                }
                 
-                System.out.println("User: " + userName);
-                System.out.println("Password: " + new String(password));
-                System.out.println("SQL Port: " + value);
+                setVisible(false);
             }
         });
         
@@ -127,4 +130,18 @@ public class PrefsDialog extends JDialog
         setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         setLocationRelativeTo(parent);
     }
+
+    public void setDefaults(String user, String password, int portNumber)
+    {
+        userField.setText(user);
+        passField.setText(password);
+        portSpinner.setValue(portNumber);
+    }
+    
+    public void setPrefsListener(PrefsListener prefsListener)
+    {
+        this.prefsListener = prefsListener;
+    }
+    
+
 }

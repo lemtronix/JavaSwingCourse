@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -28,18 +29,39 @@ public class MainFrame extends JFrame
     private JFileChooser fileChooser;
     private TablePanel tablePanel;
     private PrefsDialog prefsDialog;
+    private Preferences prefs; // This information is stored somewhere in the OS and allows preferences to be persistent 
 
     public MainFrame()
     {
         super("Employee Entry Form");
 
         setLayout(new BorderLayout());
-        
+
         // Controller
         controller = new Controller();
-        
+
+        // Preferences Node
+        prefs = Preferences.userRoot().node("db");
+
         // Preferences Dialog
         prefsDialog = new PrefsDialog(this);
+        prefsDialog.setPrefsListener(new PrefsListener()
+        {
+            // Set the preferences
+            @Override
+            public void preferencesSet(String user, String password, int portNumber)
+            {
+                prefs.put("user", user);
+                prefs.put("password", password);
+                prefs.putInt("port", portNumber);
+            }
+        });
+        
+        String user = prefs.get("user",  "");
+        String password = prefs.get("password",  "");
+        Integer portNumber = prefs.getInt("port",  3306);
+        
+        prefsDialog.setDefaults(user, password, portNumber);
         
         // Table Panel
         tablePanel = new TablePanel();
@@ -52,14 +74,13 @@ public class MainFrame extends JFrame
                 controller.removePerson(row);
             }
         });
-        
+
         // File Chooser
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
-        
         // Form Panel
         formPanel = new FormPanel();
         formPanel.setFormListener(new FormListener()
@@ -185,7 +206,7 @@ public class MainFrame extends JFrame
 
         // Create Window > Show
         JMenu showSubMenu = new JMenu("Show");
-        
+
         // Create Window > Show > Person Form
         JCheckBoxMenuItem showPersonFormItem = new JCheckBoxMenuItem("Person Form");
         showPersonFormItem.addActionListener(new ActionListener()
@@ -211,7 +232,7 @@ public class MainFrame extends JFrame
                 prefsDialog.setVisible(true);
             }
         });
-        
+
         // Window Menu
         JMenu windowMenu = new JMenu("Window");
         windowMenu.setMnemonic(KeyEvent.VK_W);
