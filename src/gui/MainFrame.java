@@ -8,6 +8,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
@@ -94,6 +97,21 @@ public class MainFrame extends JFrame
             }
         });
 
+        // Handle window close events
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter()
+        {
+            // Execute when the user clicks directly on the red X
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                // JFrame dispose method quits automatically 
+                dispose();
+                
+                // Perform garbage collection at the last possible moment
+                System.gc();
+            }
+        });
         // Add components to layout manager
         add(formPanel, BorderLayout.WEST);
         add(tablePanel, BorderLayout.CENTER);
@@ -101,7 +119,6 @@ public class MainFrame extends JFrame
         setMinimumSize(new Dimension(500, 400));
         setSize(500, 400);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -188,7 +205,13 @@ public class MainFrame extends JFrame
 
                 if (action == JOptionPane.OK_OPTION)
                 {
-                    System.exit(0);
+                    // Grab all window listeners 
+                    WindowListener[] listeners = getWindowListeners();
+                    
+                    for (WindowListener listener : listeners)
+                    {
+                        listener.windowClosing(new WindowEvent(MainFrame.this,  0));
+                    }
                 }
                 else
                 {
