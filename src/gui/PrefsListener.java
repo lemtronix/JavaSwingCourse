@@ -1,6 +1,8 @@
 package gui;
 
-public interface PrefsListener
+import java.util.EventListener;
+
+public interface PrefsListener /* extends EventListener */
 {
     public void preferencesSet(String user, String password, int portNumber);
 }
